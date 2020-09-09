@@ -2,10 +2,10 @@ $(document).ready(function(){
 
   callData();
 
-  // $(document).on('click','span.delete', function(){
-  //   var idToDo = $(this).parent().attr('data-id');
-  //   deleteElement(idToDo);  //ADD
-  // });
+  $(document).on('click','span.delete', function(){
+    var idToDo = $(this).parent().attr('data-id');
+    deleteElement(idToDo);  //ADD
+  });
 
   $('.post').click(function(){
     var nuovoItem = $('#nuovo-item').val();
@@ -14,13 +14,14 @@ $(document).ready(function(){
 
 });
 
+// Get data from API
 function callData() {
   $.ajax(
     {
       url: 'http://157.230.17.132:3011/todos',
       method: 'GET',
       success: function(risposta){
-        getElement(risposta)
+        printElement(risposta)
       },
       error: function(){
         alert('Errore');
@@ -29,7 +30,8 @@ function callData() {
   );
 }
 
-function getElement(data) {
+//Stampa item
+function printElement(data) {
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
 
@@ -38,13 +40,10 @@ function getElement(data) {
       text: data[i].text,
       id: data[i].id
     };
+
+    var html = template(context);
+    $('.todos').append(html);
   }
-
-  var html = template(context);
-  $('.todos').append(html);
-
-  // console.log(id);
-  console.log(context);
 }
 
 //Crea nuovo elemento
@@ -59,9 +58,19 @@ function createElement(elemento) {
         text: elemento
       },
       success: function(risposta){
-        
-        $('.todos').html('');
-        callData();
+
+        if (elemento !== '') {
+          $('.todos').html('');
+          callData();
+          // alert('Inserisci una voce')
+        } else {
+          // $('.todos').html('');
+          // callData();
+          alert('Inserisci una voce');
+        }
+
+        // $('.todos').html('');
+        // callData();
 
       },
       error: function(){
@@ -75,6 +84,21 @@ function createElement(elemento) {
 
 
 // Cancella elemento
-// function deleteElement() {
-//
-// }
+function deleteElement(id) {
+
+  $.ajax(
+    {
+      url: 'http://157.230.17.132:3011/todos/' + id,
+      method: 'DELETE',
+      success: function(risposta){
+        $('.todos').empty();
+        callData();
+        printElement(risposta)
+      },
+      error: function(){
+        alert('Errore');
+      }
+    }
+  );
+
+}
