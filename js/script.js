@@ -71,14 +71,12 @@ function createElement(elemento) {
       success: function(risposta){
 
         if (elemento !== '') {
-          $('.todos').html('');
+          $('.todos').empty();
           callData();
-          // alert('Inserisci una voce')
         } else {
-          // $('.todos').html('');
-          // callData();
           alert('Inserisci una voce');
         }
+
 
         // $('.todos').html('');
         // callData();
