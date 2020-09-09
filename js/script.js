@@ -12,6 +12,15 @@ $(document).ready(function(){
     createElement(nuovoItem);
   });
 
+  $('#nuovo-item').keyup(function(event) {
+
+    if ( (event.keyCode == 13) || (event.which == 13) ) {
+      var nuovoItem = $('#nuovo-item').val();
+      createElement(nuovoItem);
+    }
+
+  });
+
 });
 
 // Get data from API
