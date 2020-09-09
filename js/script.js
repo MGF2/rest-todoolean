@@ -10,6 +10,7 @@ $(document).ready(function(){
   $('.post').click(function(){
     var nuovoItem = $('#nuovo-item').val();
     createElement(nuovoItem);
+    reset();
   });
 
   $('#nuovo-item').keyup(function(event) {
@@ -17,6 +18,7 @@ $(document).ready(function(){
     if ( (event.keyCode == 13) || (event.which == 13) ) {
       var nuovoItem = $('#nuovo-item').val();
       createElement(nuovoItem);
+      reset();
     }
 
   });
@@ -110,4 +112,9 @@ function deleteElement(id) {
     }
   );
 
+}
+
+//Funzione reset
+function reset() {
+  $('#nuovo-item').val('');
 }
